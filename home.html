@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="star.ico">
+    <title>Stellar Classification</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light gray background */
+            font-family: 'Roboto', sans-serif;
+        }
+        .navbar-brand {
+            display: block;
+            margin: auto;
+            color: #212529; /* Darker color for brand */
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem; /* Slightly smaller for better balance */
+        }
+        .container {
+            max-width: 960px;
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+        }
+        .card {
+            background-color: #ffffff; /* White card background */
+            border: 1px solid #dee2e6; /* Light gray border */
+            border-radius: .5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-title {
+            font-weight: 700;
+            color: #343a40; /* Dark text */
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: .75rem;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            transition: border-color .2s ease-in-out, box-shadow .2s ease-in-out;
+        }
+        input[type="number"]:focus {
+            border-color: #495057;
+            box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);
+            outline: none;
+        }
+        .submit-button {
+            display: block;
+            width: 100%;
+            max-width: 200px;
+            margin: 2rem auto;
+            padding: .75rem 1.5rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            background-color: #007bff; /* Primary blue color */
+            border-color: #007bff;
+            transition: background-color .2s ease-in-out, border-color .2s ease-in-out;
+        }
+        .submit-button:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .predict-dec {
+            text-align: center;
+            font-weight: 700;
+            color: #28a745; /* Success green */
+            font-size: 2rem;
+            margin-top: 2rem;
+            word-wrap: break-word; /* Prevents overflow */
+        }
+        .copyright {
+            text-align: center;
+            color: #6c757d; /* Muted gray */
+            font-size: 1rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand mb-0 h1">Stellar Classification 🔭</span>
+    </nav>
+    <div class="container">
+        <form action="/predict" method="post">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <h5 class="card-title">Right Ascension angle (at J2000 epoch):</h5>
+                        <input type="number" min="0.005" max="359.999" step="0.001" name="alpha" id="alpha" required="required">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <h5 class="card-title">Declination angle (at J2000 epoch):</h5>
+                        <input type="number" min="-18.785" max="83.000" step="0.001" name="delta" id="delta" required="required">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <h5 class="card-title">Ultraviolet filter:</h5>
+                        <input type="number" min="15.349" max="28.690" step="0.001" name="u" id="u" required="required">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <h5 class="card-title">Red filter:</h5>
+                        <input type="number" min="13.772" max="25.408" step="0.001" name="r" id="r" required="required">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <h5 class="card-title">Run number:</h5>
+                        <input type="number" min="109" max="8162" name="run_id" id="run_id" required="required">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <h5 class="card-title">Camera column:</h5>
+                        <input type="number" min="1" max="6" name="cam_col" id="cam_col" required="required">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <h5 class="card-title">Field number:</h5>
+                        <input type="number" min="11.0" max="479.5" step="0.1" name="field_id" id="field_id" required="required">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <h5 class="card-title">Redshift value:</h5>
+                        <input type="number" min="-0.009" max="1.678" step="0.001" name="redshift" id="redshift" required="required">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <h5 class="card-title">Plate ID:</h5>
+                        <input type="number" min="266.0" max="12547.0" step="0.1" name="plate" id="plate" required="required">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <h5 class="card-title">Fiber ID:</h5>
+                        <input type="number" min="1" max="1000" name="fiber_id" id="fiber_id" required="required">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <h5 class="card-title">Modified Julian Age (MJD):</h5>
+                        <input type="number" min="141.39" max="161.45" step="0.01" name="mjy" id="mjy" required="required">
+                    </div>
+                </div>
+            </div>
+            
+            <input type="submit" value="Classify Star" class="btn submit-button">
+        </form>
+        <h3 class="predict-dec">{{ prediction_text }}</h3> 
+        <p class="copyright">© 2025 Riya Shukla</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+</body>
+</html>
