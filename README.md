@@ -3,10 +3,6 @@
 ![Stellar Classification](https://scitechdaily.com/images/Primordial-Stellar-Stream-Near-Milky-Way-scaled.jpg)
 ![Stellar](https://s3.envato.com/files/196219035/stellar_space_preview.jpg)
 
-## Deployed Web Application
-
-Link: https://stellar-classification.herokuapp.com/
-
 ## Context 
 <p>In astronomy, stellar classification is the classification of stars based on their spectral characteristics. The classification scheme of galaxies, quasars, and stars is one of the most fundamental in astronomy. The early cataloguing of stars and their distribution in the sky has led to the understanding that they make up our own galaxy and, following the distinction that Andromeda was a separate galaxy to our own, numerous galaxies began to be surveyed as more powerful telescopes were built. This datasat aims to classify stars, galaxies, and quasars based on their spectral characteristics.</p>
 
